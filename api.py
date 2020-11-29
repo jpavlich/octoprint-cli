@@ -70,15 +70,18 @@ class api:
     
     def getTotalTime(self):
         time = self.get("/api/job")['job']['estimatedPrintTime']
-        hours = int(time//3600)
-        if len(str(hours))==1:
-            hours = "0"+str(hours)
-        time = time%3600
-        minutes = int(time//60)
-        time = int(time%60)
-        if len(str(minutes))==1:
-            minutes = "0"+str(minutes)
-        return str(hours)+":"+str(minutes)
+        if time is not None:
+            hours = int(time//3600)
+            if len(str(hours))==1:
+                hours = "0"+str(hours)
+            time = time%3600
+            minutes = int(time//60)
+            time = int(time%60)
+            if len(str(minutes))==1:
+                minutes = "0"+str(minutes)
+            return str(hours)+":"+str(minutes)
+        else:
+            return ""
 
     def selectFile(self, fileName):
         return self.post("/api/files/local/"+fileName, {'command':'select'})
